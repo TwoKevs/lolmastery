@@ -3,6 +3,7 @@ import requests
 import json
 from pprint import pprint
 from models.ChampionCard import ChampionCard
+import properties
 
 app = Flask(__name__)
 
