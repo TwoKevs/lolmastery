@@ -3,11 +3,11 @@ import requests
 import json
 from pprint import pprint
 from models.ChampionCard import ChampionCard
+import properties
 
 app = Flask(__name__)
 
 # Expires: Mon, Dec 18th, 2023 @ 9:54am
-RGAPI_KEY='RGAPI-e79b6e45-e0c9-4667-adcf-37539646c7fc'
 champ_array = []
 id_to_champ_name = {}
 
@@ -60,13 +60,13 @@ def get_champion_splash(name):
 @app.route('/<gamename>/<tagline>/most_played')
 def get_user_puuid(gamename, tagline):
     url_get_puuid = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gamename}/{tagline}'
-    res = requests.get(url_get_puuid, headers={"X-Riot-Token":RGAPI_KEY})
+    res = requests.get(url_get_puuid, headers={"X-Riot-Token":properties.RGAPI_KEY})
     puuid_response = json.loads(res.text)
     print('hi')
     puuid = puuid_response['puuid']
 
     url_get_mastery = f'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}'
-    res = requests.get(url_get_mastery, headers={"X-Riot-Token":RGAPI_KEY})
+    res = requests.get(url_get_mastery, headers={"X-Riot-Token":properties.RGAPI_KEY})
     mastery_response = json.loads(res.text)
     
     top5 = mastery_response[:5]
