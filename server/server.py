@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 import requests
 import json
 from pprint import pprint
 from models.ChampionCard import ChampionCard
+from models.SummonerCard import SummonerCard
 import properties
 
 app = Flask(__name__)
@@ -58,12 +59,8 @@ def get_champion_splash(name):
 
 
 @app.route('/<gamename>/<tagline>/most_played')
-def get_user_puuid(gamename, tagline):
-    url_get_puuid = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gamename}/{tagline}'
-    res = requests.get(url_get_puuid, headers={"X-Riot-Token":properties.RGAPI_KEY})
-    puuid_response = json.loads(res.text)
-    print('hi')
-    puuid = puuid_response['puuid']
+def get_top_champions(gamename, tagline):
+    puuid = get_user_puuid(gamename, tagline)
 
     url_get_mastery = f'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}'
     res = requests.get(url_get_mastery, headers={"X-Riot-Token":properties.RGAPI_KEY})
@@ -97,6 +94,20 @@ def get_user_puuid(gamename, tagline):
         cardArray.append(cc)
     return cardArray
 
-@app.route('/idsToChamps')
-def get_champion_list_to_ids():
-    return id_to_champ_name
+@app.route('/multi-search', methods=["POST"])
+def get_multisearch():
+    users = json.loads(request.data)
+    summonerList = []
+    for u in users:
+        gamename = u['gameName']
+        tagline = u['tagLine']
+        cardArray = get_top_champions(gamename, tagline)
+        sc = SummonerCard(gamename, tagline, cardArray)
+        summonerList.append(sc)
+    return summonerList
+
+def get_user_puuid(gamename, tagline):
+    url_get_puuid = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gamename}/{tagline}'
+    res = requests.get(url_get_puuid, headers={"X-Riot-Token":properties.RGAPI_KEY})
+    puuid_response = json.loads(res.text)
+    return puuid_response['puuid']
