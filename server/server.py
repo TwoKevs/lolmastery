@@ -68,14 +68,29 @@ def get_top_champions(gamename, tagline):
     
     top5 = mastery_response[:5]
     cardArray = []
+    
     for champ in top5:
+        skinList = {}
         champion_name_id = (id_to_champ_name[champ['championId']])
         d_drag_data = champ_array[champion_name_id]
+
+        #The main champ array does NOT return specific objects such as skins
+        #Have to hit this endpoint in order to get skins for champions
+        #Make a list, call specific champ endpoint to add skins to champ card
+        url_get_skins = f'https://ddragon.leagueoflegends.com/cdn/13.24.1/data/en_US/champion/{champion_name_id}.json'
+        res = requests.get(url_get_skins)
+        skins = json.loads(res.text)['data'][champion_name_id]['skins']
+        for skin in skins:
+            num = skin['num']
+            skinList.update({skin['name']:f'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{champion_name_id}_{num}.jpg'})
+
+        print(skinList)
         cc = ChampionCard(champion_name = champion_name_id,
         champion_display_name=d_drag_data['name'],
         champion_mastery=champ['championPoints'],
         champion_splash=d_drag_data['image']['full'],
-        champion_last_played=champ['lastPlayTime'])
+        champion_last_played=champ['lastPlayTime'],
+        champion_splash_names=skinList)
         cardArray.append(cc)
     return cardArray
 
