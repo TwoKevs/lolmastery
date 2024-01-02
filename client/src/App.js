@@ -11,7 +11,26 @@ function App() {
 
  
   const [championsList, setChampionsList] = useState([]);
-  
+  // console.log('clist: ' + championsList)
+
+  const handleMulti = async () => {
+    try {
+      axios({
+        method: 'post',
+        url: '/multi-search',
+        data: {
+          firstName: 'Kevin',
+          lastName: 'Sullivan'
+        }
+      }).then((response) => {
+        console.log(response)
+      });
+      } catch (error) {
+        console.error(error.message);
+      }
+      // console.log('clist: ' + championsList)
+  }
+
   const handleSearch = async () => {
     try {
         const url = `/${sumName}/${tagLine}/most_played`
@@ -23,6 +42,7 @@ function App() {
       } catch (error) {
         console.error(error.message);
       }
+      console.log('clist: ' + championsList)
   }
   
 
@@ -60,10 +80,13 @@ function App() {
       </header>
       
       <div className="Card-list">
-        {championsList > 0 ?
+        {championsList.map((o,i) => 
+        <div key={i}>{ChampionCard(o)}</div>
+        )}
+        {/* {championsList > 0 ?
         championsList.map((o,i) => (ChampionCard(o)))
         : <h1 style={{color:'white'}}>BRAD YOURE GAY</h1>
-        }
+        } */}
       </div>
     </div>
   );

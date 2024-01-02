@@ -13,7 +13,7 @@ client/node_modules
 
 # production
 client/build
-
+__pycache__/
 # misc
 .DS_Store
 .env.local
