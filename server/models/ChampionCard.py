@@ -7,7 +7,8 @@ class ChampionCard:
     champion_mastery: int
     champion_splash: str
     champion_last_played: int
-    champion_splash_url: str = 'https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/'
+    champion_splash_names: {}
+    champion_splash_url: str = ''
 
     def __post_init__(self):
-        self.champion_splash_url= f'{self.champion_splash_url}{self.champion_splash}'
+        self.champion_splash_url= f'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{self.champion_name}_0.jpg'

@@ -3,6 +3,7 @@ import axios from "axios";
 import './App.css';
 import ChampionCard from './components/ChampionCard.js';
 import { Form, Button } from "react-bootstrap";
+import ChampCard from './components/ChampCard.js';
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
   
   const handleSearch = async () => {
     try {
-        const url = `/${sumName}/${tagLine}/most_played`
+        // const url = `/${sumName}/${tagLine}/most_played`
+        const url = '/markmcguire/3434/most_played'
         const data = await axios.get(url)
         setChampionsList(data.data)
         console.log(data.data)
@@ -59,11 +61,9 @@ function App() {
       </div>
       </header>
       
-      <div className="Card-list">
-        {championsList > 0 ?
-        championsList.map((o,i) => (ChampionCard(o)))
-        : <h1 style={{color:'white'}}>BRAD YOURE GAY</h1>
-        }
+      <div className="row">
+        {/* {championsList.map((o,i) => (ChampionCard(o)))} */}
+        {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)}
       </div>
     </div>
   );
