@@ -66,12 +66,12 @@
   text-align: center;
 }
 
-img {
+/* img {
   object-fit: scale-down;
   border: 15px solid;
   border-radius: 10px;
   border-color: black;
-}
+} */
 
 .card label {
   text-align: center;  
@@ -85,4 +85,29 @@ img {
   background-color: #282c34;
   margin-bottom: 5px;
   color: whitesmoke;
+}
+
+.multi-card {
+  flex: 1;
+  max-width:10px;
+  background-color: gray !important;
+  border: 2px solid whitesmoke !important;
+}
+
+.multi-row {
+  text-align: left;
+  background-color: #424449;
+  padding: 5px;
+  border: 2px solid;
+}
+
+.multi-row h2 {
+  font-size: 24px;
+  color:aliceblue;
+}
+
+.sprite-img {
+  border-radius: 50%;
+  width: 100px;
+  padding: 10px;
 }

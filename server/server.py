@@ -8,6 +8,19 @@ import properties
 
 app = Flask(__name__)
 
+
+from flask import Flask
+from pymongo import MongoClient
+
+app = Flask(__name__)
+
+client = MongoClient('localhost', 27017)
+
+db = client.mastery_db
+
+db_champions = db.champions
+
+
 # Expires: Mon, Dec 18th, 2023 @ 9:54am
 champ_array = []
 id_to_champ_name = {}
@@ -111,3 +124,12 @@ def get_user_puuid(gamename, tagline):
     res = requests.get(url_get_puuid, headers={"X-Riot-Token":properties.RGAPI_KEY})
     puuid_response = json.loads(res.text)
     return puuid_response['puuid']
+
+
+@app.route('/db-insert')
+def db_insert_champions():
+    # for champ in champ_array:
+    #     db_champions.insert_one({"_id": champ_array[champ]["key"], "champion": champ_array[champ]})
+    # ret = db_champions.insert_many(champ_array)
+    # print(ret.inserted_ds)
+    return champ_array

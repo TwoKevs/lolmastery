@@ -4,6 +4,8 @@ import './App.css';
 import ChampionCard from './components/ChampionCard.js';
 import { Form, Button } from "react-bootstrap";
 import ChampCard from './components/ChampCard.js';
+import { multiList } from './dummyData.js';
+import MultiCard from './components/MultiCard.js';
 
 function App() {
 
@@ -46,7 +48,6 @@ function App() {
       }
       console.log('clist: ' + championsList)
   }
-  
 
   return (
     <div className="App">
@@ -79,11 +80,12 @@ function App() {
         </Button>
       </Form.Group>
       </div>
+      {console.log(multiList)}
       </header>
      
       <div className="row">
-        {/* {championsList.map((o,i) => (ChampionCard(o)))} */}
-        {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)}
+        {multiList.map(player => MultiCard(player.game_name, player.top_champions))}
+        {/* {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)} */}
       </div>
     </div>
   );
