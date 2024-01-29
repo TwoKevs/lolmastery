@@ -4,6 +4,8 @@ import json
 from pprint import pprint
 from models.ChampionCard import ChampionCard
 from models.SummonerCard import SummonerCard
+from models.Match import Match
+from models.Summoner import Summoner
 import properties
 
 app = Flask(__name__)
@@ -106,8 +108,47 @@ def get_multisearch():
         summonerList.append(sc)
     return summonerList
 
+@app.route('/matches/<gamename>/<tagline>')
+def get_match_history(gamename, tagline):
+    match_count = 5
+    puuid = get_user_puuid(gamename=gamename, tagline=tagline)
+    url_get_match_history = f'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start=0&count={match_count}'
+    res = requests.get(url_get_match_history, headers={"X-Riot-Token":properties.RGAPI_KEY})
+    matchIds = json.loads(res.text)
+    print(matchIds)
+    matchesInfo = []
+    for matchId in matchIds:
+        url_match = f'https://americas.api.riotgames.com/lol/match/v5/matches/{matchId}'    
+        res = requests.get(url_match, headers={"X-Riot-Token":properties.RGAPI_KEY})
+        matchInfo = json.loads(res.text)
+        sum_list = []
+        duration = matchInfo['info']['gameDuration']
+        mode = matchInfo['info']['gameMode']
+        summoner_info = matchInfo['info']['participants']
+        for sum in summoner_info:
+            champ = sum['championName']
+            kills = sum['kills']
+            deaths = sum['deaths']
+            assists = sum['assists']
+            dmg = sum['totalDamageDealt']
+            win = sum['win']
+            id = sum['puuid']
+            name_tag = sum['riotIdGameName'] +  " " + sum['riotIdTagline']
+            summoner = Summoner(champion_name=champ, kills=kills, deaths=deaths, assists=assists, dmg_dealt=dmg, win=win, name_tagline=name_tag, puuid=id)
+            sum_list.append(summoner)
+        match = Match(match_duration=duration, game_mode=mode, summoners=sum_list)
+        matchesInfo.append(match)
+    return matchesInfo
+
+
 def get_user_puuid(gamename, tagline):
     url_get_puuid = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gamename}/{tagline}'
     res = requests.get(url_get_puuid, headers={"X-Riot-Token":properties.RGAPI_KEY})
     puuid_response = json.loads(res.text)
     return puuid_response['puuid']
+
+def get_name_by_puuid(puuid):
+    url_get_name = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/{puuid}'
+    res = requests.get(url_get_name, headers={"X-Riot-Token":properties.RGAPI_KEY})
+    name_response = json.loads(res.text)
+    return name_response['gameName'] + name_response['tagLine']
