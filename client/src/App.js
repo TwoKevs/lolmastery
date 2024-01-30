@@ -7,6 +7,11 @@ import ChampCard from './components/ChampCard.js';
 import { multiList } from './dummyData.js';
 import MultiCard from './components/MultiCard.js';
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MultiSearch from './pages/MultiSearch'
+import Layout from './pages/Layout'
+import Home from './pages/Home'
+
 function App() {
 
   const [sumName, setSumName] = useState("");
@@ -80,12 +85,18 @@ function App() {
         </Button>
       </Form.Group>
       </div>
-      {console.log(multiList)}
       </header>
-     
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path='multisearch' element={<MultiSearch />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
       <div className="row">
         {multiList.map(player => MultiCard(player.game_name, player.top_champions))}
-        {/* {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)} */}
+        {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)}
       </div>
     </div>
   );
