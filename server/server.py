@@ -160,7 +160,6 @@ def get_user_puuid(gamename, tagline):
     puuid_response = json.loads(res.text)
     return puuid_response['puuid']
 
-<<<<<<< HEAD
 
 @app.route('/db-insert')
 def db_insert_champions():
@@ -169,10 +168,8 @@ def db_insert_champions():
     # ret = db_champions.insert_many(champ_array)
     # print(ret.inserted_ds)
     return champ_array
-=======
 def get_name_by_puuid(puuid):
     url_get_name = f'https://americas.api.riotgames.com/riot/account/v1/accounts/by-puuid/{puuid}'
     res = requests.get(url_get_name, headers={"X-Riot-Token":properties.RGAPI_KEY})
     name_response = json.loads(res.text)
     return name_response['gameName'] + name_response['tagLine']
->>>>>>> 1b382ff755f45226e2a33926b8394163a7408e73
