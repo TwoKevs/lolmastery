@@ -7,6 +7,12 @@ import ChampCard from './components/ChampCard.js';
 import { multiList } from './dummyData.js';
 import MultiCard from './components/MultiCard.js';
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MultiSearch from './pages/MultiSearch'
+import Layout from './pages/Layout'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
+
 function App() {
 
   const [sumName, setSumName] = useState("");
@@ -51,44 +57,54 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>League of Legends Champion Mastery</h1>
+      <header className="App-header"> 
         <div className="flexbox-container">
-        <Form.Group className="m-0">
-        <Form.Control
-          className="textFeedback"
-          rows="3"
-          placeholder="Summoner Name"
-          value={sumName}
-          onChange={e => setSumName(e.target.value)}
-          type="text"
-        />
-        <Form.Control
-          className="textFeedback"
-          rows="3"
-          placeholder="Tagline"
-          value={tagLine}
-          onChange={e => setTagLine(e.target.value)}
-          type="text"
-        />
-        <Button
-          className="btnFormSend"
-          variant="outline-success"
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-      </Form.Group>
-      </div>
-      {console.log(multiList)}
-      </header>
-     
+          <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path='multisearch' element={<MultiSearch />} />
+                  <Route path='profile' element={<Profile />} />
+                </Route>
+              </Routes>
+          </BrowserRouter>
+          </div>
+       </header>
       <div className="row">
-        {multiList.map(player => MultiCard(player.game_name, player.top_champions))}
-        {/* {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)} */}
+        test
       </div>
     </div>
   );
 }
 
 export default App;
+
+// Button search stuff
+{/* <div className="flexbox-container">
+
+<Form.Group className="m-0">
+<Form.Control
+  className="textFeedback"
+  rows="3"
+  placeholder="Summoner Name"
+  value={sumName}
+  onChange={e => setSumName(e.target.value)}
+  type="text"
+/>
+<Form.Control
+  className="textFeedback"
+  rows="3"
+  placeholder="Tagline"
+  value={tagLine}
+  onChange={e => setTagLine(e.target.value)}
+  type="text"
+/>
+<Button
+  className="btnFormSend"
+  variant="outline-success"
+  onClick={handleSearch}
+>
+  Search
+</Button>
+</Form.Group>
+</div> */}
