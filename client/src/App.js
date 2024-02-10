@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MultiSearch from './pages/MultiSearch'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 function App() {
 
@@ -56,9 +57,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>League of Legends Champion Mastery</h1>
+      <header className="App-header"> 
+
         <div className="flexbox-container">
+
         <Form.Group className="m-0">
         <Form.Control
           className="textFeedback"
@@ -85,18 +87,20 @@ function App() {
         </Button>
       </Form.Group>
       </div>
-      </header>
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path='multisearch' element={<MultiSearch />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
+       </header>
+      <div className="flexbox-container">
+        <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path='#multisearch' element={<MultiSearch />} />
+                <Route path='#profile' element={<Profile />} />
+              </Route>
+            </Routes>
+        </BrowserRouter>
+        </div>
       <div className="row">
-        {multiList.map(player => MultiCard(player.game_name, player.top_champions))}
-        {championsList.map(champ => <ChampCard key={champ.champion_display_name} displayName={champ.champion_display_name} mastery={champ.champion_mastery} splashNames={champ.champion_splash_names} defaultSplash={champ.champion_splash_url}></ChampCard>)}
+        <h1>home</h1>
       </div>
     </div>
   );

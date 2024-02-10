@@ -1,21 +1,21 @@
 import { Outlet, Link } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 const Layout = () => {
   return (
     <>
-    <h1>kevin</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/multisearch">Multi-Search</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <Outlet />
+      <Navbar bg="dark" data-bs-theme="dark">
+        <Container>
+          <Navbar.Brand href="/">League of Legends Champion Mastery</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="#multisearch">Multi-Search</Nav.Link>
+            <Nav.Link href="#profile">Profile</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
     </>
   )
 };
