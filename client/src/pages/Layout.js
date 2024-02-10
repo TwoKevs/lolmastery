@@ -11,11 +11,12 @@ const Layout = () => {
           <Navbar.Brand href="/">League of Legends Champion Mastery</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#multisearch">Multi-Search</Nav.Link>
-            <Nav.Link href="#profile">Profile</Nav.Link>
+            <Nav.Link href="multisearch">Multi-Search</Nav.Link>
+            <Nav.Link href="profile">Profile</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
+      <Outlet />
     </>
   )
 };

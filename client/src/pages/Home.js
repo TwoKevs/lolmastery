@@ -28,12 +28,12 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flexbox-container">
+      <div className="search-bar">
       <Form.Group className="m-0">
       <Form.Control
         className="textFeedback"
         rows="3"
-        placeholder="Summoner Name"
+        placeholder="Summoner Name#NA1"
         value={sumName}
         onChange={e => setSumName(e.target.value)}
         type="text"

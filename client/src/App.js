@@ -58,52 +58,53 @@ function App() {
   return (
     <div className="App">
       <header className="App-header"> 
-
         <div className="flexbox-container">
-
-        <Form.Group className="m-0">
-        <Form.Control
-          className="textFeedback"
-          rows="3"
-          placeholder="Summoner Name"
-          value={sumName}
-          onChange={e => setSumName(e.target.value)}
-          type="text"
-        />
-        <Form.Control
-          className="textFeedback"
-          rows="3"
-          placeholder="Tagline"
-          value={tagLine}
-          onChange={e => setTagLine(e.target.value)}
-          type="text"
-        />
-        <Button
-          className="btnFormSend"
-          variant="outline-success"
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-      </Form.Group>
-      </div>
+          <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path='multisearch' element={<MultiSearch />} />
+                  <Route path='profile' element={<Profile />} />
+                </Route>
+              </Routes>
+          </BrowserRouter>
+          </div>
        </header>
-      <div className="flexbox-container">
-        <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path='#multisearch' element={<MultiSearch />} />
-                <Route path='#profile' element={<Profile />} />
-              </Route>
-            </Routes>
-        </BrowserRouter>
-        </div>
       <div className="row">
-        <h1>home</h1>
+        test
       </div>
     </div>
   );
 }
 
 export default App;
+
+// Button search stuff
+{/* <div className="flexbox-container">
+
+<Form.Group className="m-0">
+<Form.Control
+  className="textFeedback"
+  rows="3"
+  placeholder="Summoner Name"
+  value={sumName}
+  onChange={e => setSumName(e.target.value)}
+  type="text"
+/>
+<Form.Control
+  className="textFeedback"
+  rows="3"
+  placeholder="Tagline"
+  value={tagLine}
+  onChange={e => setTagLine(e.target.value)}
+  type="text"
+/>
+<Button
+  className="btnFormSend"
+  variant="outline-success"
+  onClick={handleSearch}
+>
+  Search
+</Button>
+</Form.Group>
+</div> */}
